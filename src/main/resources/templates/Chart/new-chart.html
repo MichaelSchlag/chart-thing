@@ -30,6 +30,37 @@
         <input type="text" name="chartDesc" value="Description" maxlength="400" height="50" />
     </div>
 
+    <div class="x-axis">
+        <label for="x-axis">x axis:</label>
+        <input type="text" name="x-axis" id="x-axis" value="" />
+        <br />
+        <label for="x-min">x-min:</label>
+        <input type="number" name="x-min" id="x-min" value="0" />
+        <label for="x-max">x-max:</label>
+        <input type="number" name="x-max" id="x-max" value="10" />
+    </div>
+
+    <div class="chart">
+        <canvas></canvas>
+        <script src="canvas.js"></script>
+    </div>
+
+    <div class="y-axis">
+        <label for="y-axis">y axis:</label>
+        <input type="text" name="y-axis" id="y-axis" value="" />
+        <br />
+        <label for="y-min">y-min:</label>
+        <input type="number" name="y-min" id="y-min" value="0" />
+        <label for="y-max">y-max:</label>
+        <input type="number" name="y-max" id="y-max" value="10" />
+    </div>
+
+    <div class="item-container">
+
+    </div>
+
+
+
     <input type="submit" value="Create Chart" />
 </form>
 
@@ -37,5 +68,7 @@
 </html>
 
 
-//WHAT I WANT:
-//
+<!--
+WHAT I WANT:
+CHART DIV, X AXIS DIMENSIONS, Y AXIS DIMENSIONS, ITEM X POS, ITM Y POS
+-->
