@@ -1,13 +1,22 @@
-var canvas = document.querySelector('canvas');
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+var lowX = 0;
+var highX = 10;
+var lowY = 0;
+var highY = 10;
+var intervalX = c.width/(highX-lowX);
+var intervalY = c.height/(highY-lowY);
+var itemX = 0;
+var itemY = 0;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+for(var i = 1; i < highX - lowX; i++){
+    ctx.moveTo((intervalX * i),0);
+    ctx.lineTo((intervalX * i),c.height);
+    ctx.stroke();
+}
 
-var c = canvas.getContext('2d');
-
-c.fillRect(1, 1, 300, 300);
-
-c.beginPath();
-c.moveTo(20, 0);
-c.lineTo(20, 300);
-c.stroke();
+for(var i = 1; i < highY - lowY; i++){
+    ctx.moveTo(0,(intervalY * i));
+    ctx.lineTo(c.width,(intervalY * i));
+    ctx.stroke();
+}

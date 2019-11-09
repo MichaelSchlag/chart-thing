@@ -35,14 +35,9 @@
         <input type="text" name="x-axis" id="x-axis" value="" />
         <br />
         <label for="x-min">x-min:</label>
-        <input type="number" name="x-min" id="x-min" value="0" />
+        <input type="number" name="x-min" id="x-min" value="0" onchange="drawChart()" />
         <label for="x-max">x-max:</label>
-        <input type="number" name="x-max" id="x-max" value="10" />
-    </div>
-
-    <div class="chart">
-        <canvas></canvas>
-        <script src="canvas.js"></script>
+        <input type="number" name="x-max" id="x-max" value="10" onchange="drawChart()" />
     </div>
 
     <div class="y-axis">
@@ -50,10 +45,60 @@
         <input type="text" name="y-axis" id="y-axis" value="" />
         <br />
         <label for="y-min">y-min:</label>
-        <input type="number" name="y-min" id="y-min" value="0" />
+        <input type="number" name="y-min" id="y-min" value="0" onchange="drawChart()" />
         <label for="y-max">y-max:</label>
-        <input type="number" name="y-max" id="y-max" value="10" />
+        <input type="number" name="y-max" id="y-max" value="10" onchange="drawChart()" />
     </div>
+
+    <div id="chart">
+        <canvas id="myCanvas"></canvas>
+        <script>
+            drawChart();
+
+            function drawChart(){
+                var c = document.getElementById("myCanvas");
+                var ctx = c.getContext("2d");
+                ctx.clearRect(0, 0, c.width, c.height);
+                var lowX = document.getElementById('x-min').value;
+                var highX = document.getElementById('x-max').value;
+                var lowY = document.getElementById('y-min').value;
+                var highY = document.getElementById('y-max').value;
+
+                if(highX < lowX){
+                    var dum = lowX;
+                    lowX = highX;
+                    highX = dum;
+                }
+
+                if(highY < lowY){
+                    var dum = lowY;
+                    lowY = highY;
+                    highY = dum;
+                }
+
+                var intervalX = c.width/(highX-lowX);
+                var intervalY = c.height/(highY-lowY);
+                var itemX = 0;
+                var itemY = 0;
+
+                ctx.beginPath();
+
+                for(var i = 1; i < highX - lowX; i++){
+                    ctx.moveTo((intervalX * i),0);
+                    ctx.lineTo((intervalX * i),c.height);
+                    ctx.stroke();
+                }
+
+                for(var i = 1; i < highY - lowY; i++){
+                    ctx.moveTo(0,(intervalY * i));
+                    ctx.lineTo(c.width,(intervalY * i));
+                    ctx.stroke();
+                }
+            }
+        </script>
+    </div>
+
+
 
     <div class="item-container">
 
