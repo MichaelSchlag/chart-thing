@@ -15,6 +15,10 @@
 <!--            width: 400px;-->
 <!--            height: 400px;-->
 <!--        }-->
+        #item-container{
+            height: 400px;
+            overflow-y: scroll;
+        }
     </style>
 <!--    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
@@ -22,9 +26,8 @@
 <body>
 
 <nav th:fragment="navigation">
-    <a href="/cheese">Home</a> |
-    <a href="/category">Categories</a> |
-    <a href="/menu">Menus</a>
+    <a href="/">Home</a> |
+    <a href="/new">Create</a>
 </nav>
 
 </body>

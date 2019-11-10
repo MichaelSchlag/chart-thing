@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "")
 public class ChartController {
 
-    @RequestMapping(value = "new")
+    @RequestMapping(value="")
 //    @ResponseBody
+    public String home() { return "Chart/index"; }
+
+    @RequestMapping(value = "new")
     public String newChart(){
         return "Chart/new-chart";
     }
