@@ -29,13 +29,10 @@ public class UserController {
         } else if(!user.getPassword().equals(verify) && !errors.hasErrors()){
             model.addAttribute(user);
             model.addAttribute("message", "Passwords do not match.");
-            return "user/add";
+            return "user/signup";
         } else {
-//            model.addAttribute("username", user.getUsername());
-//            model.addAttribute("email", user.getEmail());
             model.addAttribute(user);
-//            model.addAttribute("message", "Passwords do not match.");
-            return "user/add";
+            return "user/signup";
         }
     }
 
