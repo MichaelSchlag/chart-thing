@@ -64,17 +64,39 @@ function drawChart(){
 //        itemY = lowY;
 //    }
 
-//    itemX -= lowX;
-//    itemY -= lowY;
+    var itemPosX = 0;
+    if(highX < lowX){
+        itemPosX = lowX - itemX;
+    } else {
+        itemPosX = itemX - lowX;
+    }
 
-    ctx.drawImage(img, ((itemX - lowX) * intervalX - img.width/2), ((itemY - lowY) * intervalY - img.height/2), img.width, img.height);
+    var itemPosY = 0;
+    if(highY < lowY){
+        itemPosY = lowY - itemY;
+    } else {
+        itemPosY = itemY - lowY;
+    }
 
     document.getElementById("item-x").value = itemX;
     document.getElementById("item-y").value = itemY;
+
+
+    ctx.drawImage(img, (itemPosX * intervalX - img.width/2), (itemPosY * intervalY - img.height/2), img.width, img.height);
+
+
+    document.getElementById("testx").innerHTML = "# line item should rest on for x axis: " + itemPosX;
+    document.getElementById("testy").innerHTML = "# line item should rest on for y axis: " + itemPosY;
+    document.getElementById("testx2").innerHTML = "width of each box: " + intervalX;
+    document.getElementById("testy2").innerHTML = "height of each box: " + intervalY;
 }
 
 function showData(){
-     document.getElementById("item-x").hidden = false;
-     document.getElementById("item-y").hidden = false;
+     document.getElementById("item-x").hidden = !document.getElementById("item-x").hidden;
+     document.getElementById("item-y").hidden = !document.getElementById("item-y").hidden;
 
 }
+
+
+
+//if(((itemX <= lowX && itemX >= highX) || (itemX >= lowX && itemX <= highX)) && ((itemY <= lowY && itemY >= highY) || (itemY >= lowY && itemY <= highY))){}
