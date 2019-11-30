@@ -1,6 +1,8 @@
 package com.example.chartthing.Controllers;
 
+import com.example.chartthing.Models.Data.UserDao;
 import com.example.chartthing.Models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -15,6 +17,9 @@ import javax.validation.Valid;
 @RequestMapping("user")
 public class UserController {
 
+    @Autowired
+    private UserDao userDao;
+
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model){
         model.addAttribute(new User());
@@ -25,6 +30,7 @@ public class UserController {
     public String add(Model model, @ModelAttribute @Valid User user, Errors errors, @RequestParam String verify){
         if(user.getPassword().equals(verify) && !errors.hasErrors()){
             model.addAttribute("message", "Welcome, " + user.getUsername() + "!");
+            userDao.save(user);
             return "user/index";
         } else if(!user.getPassword().equals(verify) && !errors.hasErrors()){
             model.addAttribute(user);

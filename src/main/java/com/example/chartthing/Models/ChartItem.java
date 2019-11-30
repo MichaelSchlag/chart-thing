@@ -1,20 +1,30 @@
 package com.example.chartthing.Models;
 
+import javax.persistence.*;
+import java.sql.Blob;
+
+@Entity
 public class ChartItem {
 
     private int x;
     private int y;
     //private Image image;
     private String path;
+    private Blob image;
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     public ChartItem(){
 
     }
 
-    public ChartItem(int x, int y, String path){
+    public ChartItem(int x, int y, String path, int id){
         this.x = x;
         this.y = y;
         this.path = path;
+        this.id = id;
     }
 
     public int getX() {
@@ -40,4 +50,9 @@ public class ChartItem {
     public void setPath(String path) {
         this.path = path;
     }
+
+    public int getId() {
+        return id;
+    }
+
 }
