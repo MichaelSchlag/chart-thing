@@ -48,7 +48,8 @@ public class ChartController {
         tests.add(new Test("testing"));
         tests.add(new Test("testing!!!"));
         model.addAttribute("tests", "tests");
-        model.addAttribute("items", "items");
+//        model.addAttribute("items", "items");
+        model.addAttribute("items", chartItemDao.findAll());
         model.addAttribute("title", "New Chart");
         System.out.println(items);
         return "Chart/new-chart";
