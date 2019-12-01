@@ -110,30 +110,7 @@
 
         <div class="row">
 
-    <center>
-        <h1>File Upload to Database Demo</h1>
-        <form method="post" action="uploadServlet" enctype="multipart/form-data">
-            <table border="0">
-                <tr>
-                    <td>x: </td>
-                    <td><input type="text" name="x" size="50"/></td>
-                </tr>
-                <tr>
-                    <td>y: </td>
-                    <td><input type="text" name="y" size="50"/></td>
-                </tr>
-                <tr>
-                    <td>Portrait Photo: </td>
-                    <td><input type="file" name="photo" size="50"/></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="submit" value="Save">
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </center>
+
         </div>
 
     </div>
@@ -144,6 +121,35 @@
 <!--<div th:each="test: ${tests}">-->
 <!--    <p th:text="${test.text}"></p>-->
 <!--</div>-->
+
+<center>
+    <h1>File Upload to Database Demo</h1>
+    <!--        <form method="post" action="uploadServlet" enctype="multipart/form-data">-->
+    <!--            <table border="0">-->
+    <!--                <tr>-->
+    <!--                    <td>x: </td>-->
+    <!--                    <td><input type="text" name="x" size="50"/></td>-->
+    <!--                </tr>-->
+    <!--                <tr>-->
+    <!--                    <td>y: </td>-->
+    <!--                    <td><input type="text" name="y" size="50"/></td>-->
+    <!--                </tr>-->
+    <!--                <tr>-->
+    <!--                    <td>Portrait Photo: </td>-->
+    <!--                    <td><input type="file" name="photo" size="50"/></td>-->
+    <!--                </tr>-->
+    <!--                <tr>-->
+    <!--                    <td colspan="2">-->
+    <!--                        <input type="submit" value="Save">-->
+    <!--                    </td>-->
+    <!--                </tr>-->
+    <!--            </table>-->
+    <!--        </form>-->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <input type="submit" value="Upload File" />
+    </form>
+</center>
 
 </body>
 </html>

@@ -20,11 +20,10 @@ public class ChartItem {
 
     }
 
-    public ChartItem(int x, int y, String path, int id){
+    public ChartItem(int x, int y, String path){
         this.x = x;
         this.y = y;
         this.path = path;
-        this.id = id;
     }
 
     public int getX() {
