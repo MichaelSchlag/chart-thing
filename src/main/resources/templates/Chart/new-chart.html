@@ -55,6 +55,9 @@
         <p id="testy"></p>
         <p id="testx2"></p>
         <p id="testy2"></p>
+        <p id="testa"></p>
+        <p id="testb"></p>
+        <p id="testc"></p>
     </div>
 
     <div id="chart">
@@ -64,7 +67,17 @@
 
     <div id="item-container">
         <table>
-            <tr id="item-data" th:each="item : ${items}">
+<!--            <tr id="item-data" th:each="item : ${items}">-->
+<!--                <td>-->
+<!--                    <div>-->
+<!--                        <img th:src="@{/images/${item.getPath()}" id="item${item.getId()}" alt="Fruit" onclick="showData()" width="100" height="100" />-->
+<!--                        <br />-->
+<!--                        <input type="number" name="item-x" id="item-x${item.getId()}" th:value="${item.getX()}" onchange="drawChart()" hidden="true" />-->
+<!--                        <input type="number" name="item-y" id="item-y${item.getId()}" th:value="${item.getY()}" onchange="drawChart()" hidden="true" />-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+            <tr>
                 <td>
                     <div>
                         <img th:src="@{/images/apple.jpg}" id="apple" alt="Apple" onclick="showData()" width="100" height="100" />
@@ -97,3 +110,53 @@
 <!--// th:each="item : ${items}"-->
 
 <!--<img th:src="@{/images/{item.getPath()}}" id="apple" alt="Apple" onclick="showData()" width="100" height="100" />-->
+
+
+<!--<div id="item-container">-->
+<!--    <table>-->
+<!--        <tr id="item-data" th:each="item : ${items}">-->
+<!--            <td>-->
+<!--                <div>-->
+<!--                    <img th:src="@{/images/apple.jpg}" id="apple" alt="Apple" onclick="showData()" width="100" height="100" />-->
+<!--                    <br />-->
+<!--                    <input type="number" name="item-x" id="item-x" th:value="item.x" onchange="drawChart()" hidden="true" />-->
+<!--                    <input type="number" name="item-y" id="item-y" th:value="item.y" onchange="drawChart()" hidden="true" />-->
+<!--                </div>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td><img th:src="@{/images/banana.jpg}" alt="Banana" onclick="showData()" /></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td><img th:src="@{/images/coconut.jpg}" alt="Coconut" onclick="showData()" /></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td><img th:src="@{/images/strawberry.jpg}" alt="Strawberry" onclick="showData()" /></td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</div>-->
+
+
+<!--<div id="item-container">-->
+<!--    <table>-->
+<!--        <tr id="item-data" th:each="item : ${items}">-->
+<!--            <td>-->
+<!--                <div>-->
+<!--                    <img th:src="@{/images/{item.getPath()}}" id="item${item.getId()}" alt="Apple" onclick="showData()" width="100" height="100" />-->
+<!--                    <br />-->
+<!--                    <input type="number" name="item-x" id="item-x + ${item.getId()}" th:value="${item.getX()}" onchange="drawChart()" hidden="true" />-->
+<!--                    <input type="number" name="item-y" id="item-y + ${item.getId()}" th:value="${item.getY()}" onchange="drawChart()" hidden="true" />-->
+<!--                </div>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td><img th:src="@{/images/banana.jpg}" alt="Banana" onclick="showData()" /></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td><img th:src="@{/images/coconut.jpg}" alt="Coconut" onclick="showData()" /></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td><img th:src="@{/images/strawberry.jpg}" alt="Strawberry" onclick="showData()" /></td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</div>-->

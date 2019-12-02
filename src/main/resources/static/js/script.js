@@ -47,48 +47,38 @@ function drawChart(){
     }
     ctx.stroke();
 
-    var img = document.getElementById("apple");
-    var itemX = document.getElementById("item-x").value;
-    var itemY = document.getElementById("item-y").value;
+//    for(var i = 0; i < 4; i++){
+        var img = document.getElementById("apple");
+        var itemX = document.getElementById("item-x").value;
+        var itemY = document.getElementById("item-y").value;
 
-//    if(itemX > highX){
-//        itemX = highX;
+        var itemPosX = 0;
+        if(highX < lowX){
+            itemPosX = lowX - itemX;
+        } else {
+            itemPosX = itemX - lowX;
+        }
+
+        var itemPosY = 0;
+        if(highY < lowY){
+            itemPosY = lowY - itemY;
+        } else {
+            itemPosY = itemY - lowY;
+        }
+
+        document.getElementById("item-x").value = itemX;
+        document.getElementById("item-y").value = itemY;
+
+        ctx.drawImage(img, (itemPosX * intervalX - img.width/2), (itemPosY * intervalY - img.height/2), img.width, img.height);
 //    }
-//    if(itemX < lowX){
-//        itemX = lowX;
-//    }
-//    if(itemY > highY){
-//        itemY = highY;
-//    }
-//    if(itemY < lowY){
-//        itemY = lowY;
-//    }
-
-    var itemPosX = 0;
-    if(highX < lowX){
-        itemPosX = lowX - itemX;
-    } else {
-        itemPosX = itemX - lowX;
-    }
-
-    var itemPosY = 0;
-    if(highY < lowY){
-        itemPosY = lowY - itemY;
-    } else {
-        itemPosY = itemY - lowY;
-    }
-
-    document.getElementById("item-x").value = itemX;
-    document.getElementById("item-y").value = itemY;
-
-
-    ctx.drawImage(img, (itemPosX * intervalX - img.width/2), (itemPosY * intervalY - img.height/2), img.width, img.height);
-
 
     document.getElementById("testx").innerHTML = "# line item should rest on for x axis: " + itemPosX;
     document.getElementById("testy").innerHTML = "# line item should rest on for y axis: " + itemPosY;
     document.getElementById("testx2").innerHTML = "width of each box: " + intervalX;
     document.getElementById("testy2").innerHTML = "height of each box: " + intervalY;
+    document.getElementById("testa").innerHTML = "item x " + itemX;
+    document.getElementById("testb").innerHTML = "low x " + lowX;
+    document.getElementById("testc").innerHTML = "item pos x " + itemPosX;
 }
 
 function showData(){
