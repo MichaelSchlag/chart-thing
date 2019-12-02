@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,6 +71,20 @@ public class ChartController {
 
 
         return "Chart/new-chart";
+    }
+//, method = RequestMethod.POST
+    @RequestMapping(value = "delete")
+    public String delete(Model model, @RequestParam("del_id") String del_id_string){
+
+        Integer del_id = Integer.parseInt(del_id_string);
+        System.out.println(del_id);
+
+        chartItemDao.deleteById(del_id);
+
+        model.addAttribute("items", chartItemDao.findAll());
+        model.addAttribute("title", "New Chart");
+
+        return "redirect:/new";
     }
 
 }

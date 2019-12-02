@@ -108,4 +108,6 @@ function drawImage(){
 function showData(id){
      document.getElementById("item-x" + id).hidden = !document.getElementById("item-x" + id).hidden;
      document.getElementById("item-y" + id).hidden = !document.getElementById("item-y" + id).hidden;
+     document.getElementById("del" + id).hidden = !document.getElementById("del" + id).hidden;
+//     document.getElementById("delLabel" + id).hidden = !document.getElementById("delLabel" + id).hidden;
 }
