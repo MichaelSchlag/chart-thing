@@ -46,11 +46,41 @@ function drawChart(){
         ctx.stroke();
     }
     ctx.stroke();
+    drawImage();
+}
 
-//    for(var i = 0; i < 4; i++){
-        var img = document.getElementById("apple");
-        var itemX = document.getElementById("item-x").value;
-        var itemY = document.getElementById("item-y").value;
+function drawImage(){
+    var idIterator = 0;
+    while(document.getElementById("item" + idIterator)){
+        var img = document.getElementById("item" + idIterator);
+        var itemX = document.getElementById("item-x" + idIterator).value;
+        var itemY = document.getElementById("item-y" + idIterator).value;
+
+        var lowX = document.getElementById("x-min").value;
+        var highX = document.getElementById("x-max").value;
+        var lowY = document.getElementById("y-min").value;
+        var highY = document.getElementById("y-max").value;
+
+        var diffX = highX - lowX;
+        var diffY = highY - lowY;
+
+        if(diffX < 0){
+            diffX *= -1;
+        }
+        if(diffY < 0){
+            diffY *= -1;
+        }
+
+        if(highX != lowX){
+            var intervalX = c.width/(diffX);
+        } else {
+            var intervalX = c.width;
+        }
+        if(highY != lowY){
+            var intervalY = c.height/(diffY);
+        } else {
+            var intervalY = c.height;
+        }
 
         var itemPosX = 0;
         if(highX < lowX){
@@ -66,27 +96,18 @@ function drawChart(){
             itemPosY = itemY - lowY;
         }
 
-        document.getElementById("item-x").value = itemX;
-        document.getElementById("item-y").value = itemY;
+        document.getElementById("item-x" + idIterator).value = itemX;
+        document.getElementById("item-y" + idIterator).value = itemY;
 
         ctx.drawImage(img, (itemPosX * intervalX - img.width/2), (itemPosY * intervalY - img.height/2), img.width, img.height);
-//    }
 
-    document.getElementById("testx").innerHTML = "# line item should rest on for x axis: " + itemPosX;
-    document.getElementById("testy").innerHTML = "# line item should rest on for y axis: " + itemPosY;
-    document.getElementById("testx2").innerHTML = "width of each box: " + intervalX;
-    document.getElementById("testy2").innerHTML = "height of each box: " + intervalY;
-    document.getElementById("testa").innerHTML = "item x " + itemX;
-    document.getElementById("testb").innerHTML = "low x " + lowX;
-    document.getElementById("testc").innerHTML = "item pos x " + itemPosX;
+        idIterator++;
+    }
 }
 
-function showData(){
-     document.getElementById("item-x").hidden = !document.getElementById("item-x").hidden;
-     document.getElementById("item-y").hidden = !document.getElementById("item-y").hidden;
-
+function showData(id){
+     document.getElementById("item-x" + id).hidden = !document.getElementById("item-x" + id).hidden;
+     document.getElementById("item-y" + id).hidden = !document.getElementById("item-y" + id).hidden;
+     document.getElementById("del" + id).hidden = !document.getElementById("del" + id).hidden;
+//     document.getElementById("delLabel" + id).hidden = !document.getElementById("delLabel" + id).hidden;
 }
-
-
-
-//if(((itemX <= lowX && itemX >= highX) || (itemX >= lowX && itemX <= highX)) && ((itemY <= lowY && itemY >= highY) || (itemY >= lowY && itemY <= highY))){}

@@ -1,33 +1,29 @@
 package com.example.chartthing.Models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Blob;
 
 @Entity
 public class ChartItem {
-
-    @Id
-    @GeneratedValue
-    private int id;
 
     private int x;
     private int y;
     //private Image image;
     private String path;
+    private Blob image;
 
+    @Id
+    @GeneratedValue
+    private int id;
 
     public ChartItem(){
 
     }
 
-    public ChartItem(int x, int y, String path, int id){
+    public ChartItem(int x, int y, String path){
         this.x = x;
         this.y = y;
         this.path = path;
-        this.id = id;
     }
 
     public int getX() {
@@ -58,7 +54,4 @@ public class ChartItem {
         return id;
     }
 
-   // public void setId(int id) {
-//        this.id = id;
-//    }
 }

@@ -1,10 +1,17 @@
 package com.example.chartthing.Models;
 
+import com.sun.javafx.beans.IDProperty;
+
+import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Chart {
 
-    private List<ChartItem> chartItems;
+    private ArrayList<ChartItem> chartItems;
     private String name;
     private String description;
     private String xname;
@@ -13,6 +20,10 @@ public class Chart {
     private int xmax;
     private int ymin;
     private int ymax;
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     public Chart(String name, String description) {
         this.name = name;
@@ -25,7 +36,7 @@ public class Chart {
         return chartItems;
     }
 
-    public void setChartItems(List<ChartItem> chartItems) {
+    public void setChartItems(ArrayList<ChartItem> chartItems) {
         this.chartItems = chartItems;
     }
 
