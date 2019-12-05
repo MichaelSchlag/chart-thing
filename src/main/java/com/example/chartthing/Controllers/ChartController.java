@@ -62,7 +62,7 @@ public class ChartController {
     }
 
     @RequestMapping(value = "upload")
-    public String upload(Model model,@RequestParam("file") MultipartFile[] files) {
+    public String upload(Model model, @RequestParam("file") MultipartFile[] files, @RequestParam("secretStringAdd") String secretString) {
         StringBuilder fileNames = new StringBuilder();
         for (MultipartFile file : files) {
             Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
@@ -79,7 +79,7 @@ public class ChartController {
         System.out.println(newChartItem);
         chartItemDao.save(newChartItem);
 
-//        secretDecoder(secret);
+        secretDecoder(secretString);
 
         model.addAttribute("items", chartItemDao.findAll());
         model.addAttribute("title", "New Chart");

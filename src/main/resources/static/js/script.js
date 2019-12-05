@@ -113,10 +113,11 @@ function drawImage(){
         }
         idIterator++;
     }
-    var all = document.getElementsByName("secretStringDel")
+    var all = document.getElementsByName("secretStringDel");
     for(var i = 0; i < all.length; i++){
         all[i].value = secret.value;
     }
+    document.getElementById("secretStringAdd").value = secret.value;
 }
 
 

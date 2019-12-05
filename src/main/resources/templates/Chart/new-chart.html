@@ -87,7 +87,7 @@
                 <span th:text="${item.path}"></span>
                 <input type="submit" th:id="'del' + ${item.id}" value="Delete" />
                 <input type="number" th:name="del_id" th:value="${item.id}" hidden="true" />
-                <input type="text" th:id="'secretStringDel' + ${item.id}" name="secretStringDel"></input>
+                <input type="text" th:id="'secretStringDel' + ${item.id}" name="secretStringDel" />
             </td>
         </tr>
     </table>
@@ -99,6 +99,7 @@
     <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="file" />
         <input type="submit" value="Upload File" />
+        <input type="text" id="secretStringAdd" name="secretStringAdd" />
     </form>
 </center>
 
