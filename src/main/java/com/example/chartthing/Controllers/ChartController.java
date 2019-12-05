@@ -50,7 +50,7 @@ public class ChartController {
     }
 
     @RequestMapping(value = "upload")
-    public String upload(Model model,@RequestParam("file") MultipartFile[] files) {
+    public String upload(Model model,@RequestParam("file") MultipartFile[] files, @RequestParam List<Integer> item_x, @RequestParam List<Integer> item_y) {
         StringBuilder fileNames = new StringBuilder();
         for (MultipartFile file : files) {
             Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
@@ -65,12 +65,9 @@ public class ChartController {
         ChartItem newChartItem = new ChartItem(0, 0, "" + files[0].getOriginalFilename());
         System.out.println(newChartItem);
         chartItemDao.save(newChartItem);
+        update_item_positions(item_x, item_y);
 
-        model.addAttribute("items", chartItemDao.findAll());
-        model.addAttribute("title", "New Chart");
-
-
-        return "Chart/new-chart";
+        return "redirect:/new";
     }
 //, method = RequestMethod.POST
     @RequestMapping(value = "delete")
@@ -81,10 +78,20 @@ public class ChartController {
 
         chartItemDao.deleteById(del_id);
 
-        model.addAttribute("items", chartItemDao.findAll());
-        model.addAttribute("title", "New Chart");
-
         return "redirect:/new";
+    }
+
+    public void update_item_positions(List<Integer> xvals,  List<Integer> yvals){
+
+
+//        for(ChartItem chartItem : chartItemDao.findAll()){
+//            chartItem.setX();
+//            chartItem.setY();
+//        }
+
+        System.out.println(xvals);
+        System.out.println(yvals);
+
     }
 
 }

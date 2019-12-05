@@ -78,9 +78,11 @@
                                 <img th:src="@{'/images/' + ${item.path}}" th:id="'item' + ${item.id}" alt="Apple" th:onclick="'showData(' + ${item.id} + ');'" width="100" height="100" />
                                 <input type="checkbox" th:name="${item.id}" th:id="'del' + ${item.id}" value="Delete" hidden="true" />
                                 <br />
-                                <input type="number" name="item-x" th:id="'item-x' + ${item.id}" th:value="${item.x}" onchange="drawChart()" hidden="true" />
-                                <input type="number" name="item-y" th:id="'item-y' + ${item.id}" th:value="${item.y}" onchange="drawChart()" hidden="true" />
+                                <input type="number" name="item_x" th:id="'item-x' + ${item.id}" th:value="${item.x}" onchange="drawChart()" hidden="true" />
+                                <input type="number" name="item_y" th:id="'item-y' + ${item.id}" th:value="${item.y}" onchange="drawChart()" hidden="true" />
                                 <p th:text="${item.getPath()}"></p>
+                                <script src="/js/script.js">setHighest();</script>
+                                <script src="/js/script.js"></script>
                             </div>
                         </td>
                     </tr>
