@@ -8,23 +8,7 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<table class="table">
-
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Category</th>
-    </tr>
-
-    <tr th:each="cheese : ${cheeses}">
-        <td th:text="${cheese.name}"></td>
-        <td th:text="${cheese.description}"></td>
-        <td th:text="${cheese.category.name}"></td>
-    </tr>
-
-</table>
-
-<form method="post" th:object="${form}">
+<form method="post" th:object="${chart}" modelAttribute="chart">
     <div class="row">
         <div class="col-6">
             <div class="form-group">
@@ -58,6 +42,7 @@
                 <p id="testy"></p>
                 <p id="testx2"></p>
                 <p id="testy2"></p>
+                <input type="text" id="secretString" name="secretString"></input>
             </div>
         </div>
     </div>
@@ -81,6 +66,7 @@
                                 <input type="number" name="item-x" th:id="'item-x' + ${item.id}" th:value="${item.x}" onchange="drawChart()" hidden="true" />
                                 <input type="number" name="item-y" th:id="'item-y' + ${item.id}" th:value="${item.y}" onchange="drawChart()" hidden="true" />
                                 <p th:text="${item.getPath()}"></p>
+                                <script src="js/script.js"></script>
                             </div>
                         </td>
                     </tr>
@@ -101,9 +87,11 @@
                 <span th:text="${item.path}"></span>
                 <input type="submit" th:id="'del' + ${item.id}" value="Delete" />
                 <input type="number" th:name="del_id" th:value="${item.id}" hidden="true" />
+                <input type="text" th:id="'secretStringDel' + ${item.id}" name="secretStringDel"></input>
             </td>
         </tr>
     </table>
+
 </form>
 
 <center>
