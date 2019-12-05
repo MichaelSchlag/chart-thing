@@ -50,6 +50,32 @@ public class ChartController {
         return "Chart/new-chart";
     }
 
+    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
+    public String newChart(@PathVariable("id") int id, Model model){
+
+        Chart chart = chartDao.findById(id).get();
+        ArrayList<ChartItem> items = new ArrayList<>();
+
+        for(ChartItem item : chartItemDao.findAll()){
+            if (item.getChartId() == id){
+                items.add(item);
+            }
+        }
+
+        model.addAttribute("items", items);
+        model.addAttribute("title", "New Chart");
+        model.addAttribute("chart", chart);
+        model.addAttribute("theName", chart.getName());
+        model.addAttribute("theDesc", chart.getDescription());
+        model.addAttribute("theX", chart.getXname());
+        model.addAttribute("theY", chart.getYname());
+        model.addAttribute("theXMin", chart.getXmin());
+        model.addAttribute("theXMax", chart.getXmax());
+        model.addAttribute("theYMin", chart.getYmin());
+        model.addAttribute("theYMax", chart.getYmax());
+        return "Chart/view-chart";
+    }
+
 //    @RequestMapping(value = "new", method = RequestMethod.POST)
 //    public String postNewChart(Model model, Errors errors, @ModelAttribute @Valid Chart newChart){
 //
@@ -104,7 +130,7 @@ public class ChartController {
                 e.printStackTrace();
             }
         }
-        ChartItem newChartItem = new ChartItem(0, 0, "" + files[0].getOriginalFilename(), );
+        ChartItem newChartItem = new ChartItem(0, 0, "" + files[0].getOriginalFilename());
 
         System.out.println(newChartItem);
         chartItemDao.save(newChartItem);

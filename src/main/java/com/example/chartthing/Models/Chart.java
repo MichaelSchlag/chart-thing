@@ -22,6 +22,8 @@ public class Chart {
     private int ymin;
     private int ymax;
 
+    private int userId;
+
     @Id
     @GeneratedValue
     private int id;
