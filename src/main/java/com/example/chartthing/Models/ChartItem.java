@@ -12,6 +12,8 @@ public class ChartItem {
     private String path;
     private Blob image;
 
+    private int chartId;
+
     @Id
     @GeneratedValue
     private int id;
@@ -20,10 +22,11 @@ public class ChartItem {
 
     }
 
-    public ChartItem(int x, int y, String path){
+    public ChartItem(int x, int y, String path, int chartId){
         this.x = x;
         this.y = y;
         this.path = path;
+        this.chartId = chartId;
     }
 
     public int getX() {

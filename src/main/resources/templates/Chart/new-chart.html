@@ -42,7 +42,7 @@
                 <p id="testy"></p>
                 <p id="testx2"></p>
                 <p id="testy2"></p>
-                <input type="text" id="secretString" name="secretString"></input>
+                <input type="text" id="secretString" name="secretString" hidden="true" />
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
                         <td>
                             <div>
                                 <img th:src="@{'/images/' + ${item.path}}" th:id="'item' + ${item.id}" alt="Apple" th:onclick="'showData(' + ${item.id} + ');'" width="100" height="100" />
-                                <input type="checkbox" th:name="${item.id}" th:id="'del' + ${item.id}" value="Delete" hidden="true" />
+<!--                                <input type="checkbox" th:name="${item.id}" th:id="'del' + ${item.id}" value="Delete" hidden="true" />-->
                                 <br />
                                 <input type="number" name="item-x" th:id="'item-x' + ${item.id}" th:value="${item.x}" onchange="drawChart()" hidden="true" />
                                 <input type="number" name="item-y" th:id="'item-y' + ${item.id}" th:value="${item.y}" onchange="drawChart()" hidden="true" />
@@ -87,7 +87,7 @@
                 <span th:text="${item.path}"></span>
                 <input type="submit" th:id="'del' + ${item.id}" value="Delete" />
                 <input type="number" th:name="del_id" th:value="${item.id}" hidden="true" />
-                <input type="text" th:id="'secretStringDel' + ${item.id}" name="secretStringDel" />
+                <input type="text" th:id="'secretStringDel' + ${item.id}" name="secretStringDel" hidden="true" />
             </td>
         </tr>
     </table>
@@ -99,7 +99,7 @@
     <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="file" />
         <input type="submit" value="Upload File" />
-        <input type="text" id="secretStringAdd" name="secretStringAdd" />
+        <input type="text" id="secretStringAdd" name="secretStringAdd" hidden="true" />
     </form>
 </center>
 

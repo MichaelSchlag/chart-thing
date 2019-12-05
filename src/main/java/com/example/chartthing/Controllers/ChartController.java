@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -49,16 +50,45 @@ public class ChartController {
         return "Chart/new-chart";
     }
 
+//    @RequestMapping(value = "new", method = RequestMethod.POST)
+//    public String postNewChart(Model model, Errors errors, @ModelAttribute @Valid Chart newChart){
+//
+//        if(errors.hasErrors()){
+//            model.addAttribute("items", chartItemDao.findAll());
+//            model.addAttribute("title", "New Chart");
+//            return "Chart/new-chart";
+//        }
+//
+//        return "test-success";
+//    }
+
     @RequestMapping(value = "new", method = RequestMethod.POST)
-    public String postNewChart(Model model, Errors errors, @ModelAttribute @Valid Chart newChart){
+    public String postNewChart(Model model, @RequestParam Map<String,String> requestParams){
 
-        if(errors.hasErrors()){
-            model.addAttribute("items", chartItemDao.findAll());
-            model.addAttribute("title", "New Chart");
-            return "Chart/new-chart";
-        }
+//        if(errors.hasErrors()){
+//            model.addAttribute("items", chartItemDao.findAll());
+//            model.addAttribute("title", "New Chart");
+//            return "Chart/new-chart";
+//        }
 
-        return "test-success";
+//        System.out.println(requestParams.size());
+        ArrayList<Integer> ids = findIdsOfSecretString(requestParams.get("secretString"));
+        System.out.println(ids);
+
+        String chartName = requestParams.get("chartName");
+        String chartDesc = requestParams.get("chartDesc");
+        String xname = requestParams.get("x-axis");
+        String yname = requestParams.get("y-axis");
+        int xmin = Integer.parseInt(requestParams.get("x-min"));
+        int xmax = Integer.parseInt(requestParams.get("x-max"));
+        int ymin = Integer.parseInt(requestParams.get("y-min"));
+        int ymax = Integer.parseInt(requestParams.get("y-max"));
+
+        Chart newChart = new Chart(chartName, chartDesc, xname, yname, xmin, xmax, ymin, ymax);
+
+        chartDao.save(newChart);
+
+        return "Chart/test-success";
     }
 
     @RequestMapping(value = "upload")
@@ -74,7 +104,7 @@ public class ChartController {
                 e.printStackTrace();
             }
         }
-        ChartItem newChartItem = new ChartItem(0, 0, "" + files[0].getOriginalFilename());
+        ChartItem newChartItem = new ChartItem(0, 0, "" + files[0].getOriginalFilename(), );
 
         System.out.println(newChartItem);
         chartItemDao.save(newChartItem);
@@ -105,7 +135,7 @@ public class ChartController {
     }
 
     public void secretDecoder(String secret){
-        System.out.println(secret);
+//        System.out.println(secret);
         char[] letter = secret.toCharArray();
         int c = 0;
         while(c < secret.length()) {
@@ -138,6 +168,28 @@ public class ChartController {
                 chartItemDao.save(temp_item);
             }
         }
+    }
+
+    public ArrayList<Integer> findIdsOfSecretString(String secretString){
+        ArrayList<Integer> ids = new ArrayList<>();
+
+        char[] letter = secretString.toCharArray();
+        int c = 0;
+        while(c < secretString.length()) {
+            String temp_id = "";
+            while (letter[c] != ',') {
+                temp_id += letter[c];
+                c++;
+            }
+            int id = Integer.parseInt(temp_id);
+            ids.add(id);
+            while (letter[c] != '!') {
+                c++;
+            }
+            c++;
+        }
+
+        return ids;
     }
 
 }
