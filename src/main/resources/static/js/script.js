@@ -54,11 +54,16 @@ function drawImage(){
     var div = document.getElementById("item-container");
     var nodelist = div.getElementsByTagName("img").length;
     var completed_images = 0;
+    var secret = document.getElementById("secretString");
+    secret.value = "";
     while(completed_images < nodelist){
         if(document.getElementById("item" + idIterator)){
             var img = document.getElementById("item" + idIterator);
             var itemX = document.getElementById("item-x" + idIterator).value;
             var itemY = document.getElementById("item-y" + idIterator).value;
+
+            secret.value += idIterator + "," + itemX + "," + itemY + "!";
+
 
             var lowX = document.getElementById("x-min").value;
             var highX = document.getElementById("x-max").value;
@@ -108,15 +113,17 @@ function drawImage(){
         }
         idIterator++;
     }
+    var all = document.getElementsByName("secretStringDel");
+    for(var i = 0; i < all.length; i++){
+        all[i].value = secret.value;
+    }
+    document.getElementById("secretStringAdd").value = secret.value;
 }
+
 
 function showData(id){
      document.getElementById("item-x" + id).hidden = !document.getElementById("item-x" + id).hidden;
      document.getElementById("item-y" + id).hidden = !document.getElementById("item-y" + id).hidden;
      document.getElementById("del" + id).hidden = !document.getElementById("del" + id).hidden;
 //     document.getElementById("delLabel" + id).hidden = !document.getElementById("delLabel" + id).hidden;
-}
-
-function setHighest(highest){
-
 }

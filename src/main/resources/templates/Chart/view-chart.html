@@ -4,36 +4,34 @@
 
 <body class="container">
 
-<h1>New Chart</h1>
+<h1>View Chart</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
 
 <form method="post" th:object="${chart}" modelAttribute="chart">
     <div class="row">
         <div class="col-6">
-            <div class="form-group">
-                <input type="text" name="chartName" value="Name" maxlength="80"/>
-                <input type="text" name="chartDesc" value="Description" maxlength="400" height="50" />
-            </div>
+            <h1 th:text="${theName}"></h1>
+            <h3 th:text="${theDesc}"></h3>
 
             <div class="x-axis">
                 <label for="x-axis">x axis:</label>
-                <input type="text" name="x-axis" id="x-axis" value="" />
+                <input type="text" name="x-axis" id="x-axis" th:value="${theX}" disabled />
                 <br />
                 <label for="x-min">x-min:</label>
-                <input type="number" name="x-min" id="x-min" value="0" onchange="drawChart()" />
+                <input type="number" name="x-min" id="x-min" th:value="${theXmin}" onchange="drawChart()" disabled />
                 <label for="x-max">x-max:</label>
-                <input type="number" name="x-max" id="x-max" value="10" onchange="drawChart()" />
+                <input type="number" name="x-max" id="x-max" th:value="${theXmax}" onchange="drawChart()" disabled />
             </div>
 
             <div class="y-axis">
                 <label for="y-axis">y axis:</label>
-                <input type="text" name="y-axis" id="y-axis" value="" />
+                <input type="text" name="y-axis" id="y-axis" th:value="${theY}" disabled />
                 <br />
                 <label for="y-min">y-min:</label>
-                <input type="number" name="y-min" id="y-min" value="0" onchange="drawChart()" />
+                <input type="number" name="y-min" id="y-min" th:value="${theYmin}" onchange="drawChart()" disabled />
                 <label for="y-max">y-max:</label>
-                <input type="number" name="y-max" id="y-max" value="10" onchange="drawChart()" />
+                <input type="number" name="y-max" id="y-max" th:value="${theYmax}" onchange="drawChart()" disabled />
             </div>
         </div>
         <div class="col-6">
@@ -61,7 +59,6 @@
                         <td>
                             <div>
                                 <img th:src="@{'/images/' + ${item.path}}" th:id="'item' + ${item.id}" alt="Apple" th:onclick="'showData(' + ${item.id} + ');'" width="100" height="100" />
-<!--                                <input type="checkbox" th:name="${item.id}" th:id="'del' + ${item.id}" value="Delete" hidden="true" />-->
                                 <br />
                                 <input type="number" name="item-x" th:id="'item-x' + ${item.id}" th:value="${item.x}" onchange="drawChart()" hidden="true" />
                                 <input type="number" name="item-y" th:id="'item-y' + ${item.id}" th:value="${item.y}" onchange="drawChart()" hidden="true" />
@@ -74,34 +71,9 @@
             </div>
         </div>
     </div>
-
-    <input type="submit" value="Create Chart" />
+    <input type="submit" value="Cast Vote" />
 </form>
 
-<h1>Delete Selected Items</h1>
-<!--method="post"-->
-<form action="/delete" th:each="item: ${items}">
-    <table>
-        <tr id="item-delete-list">
-            <td>
-                <span th:text="${item.path}"></span>
-                <input type="submit" th:id="'del' + ${item.id}" value="Delete" />
-                <input type="number" th:name="del_id" th:value="${item.id}" hidden="true" />
-                <input type="text" th:id="'secretStringDel' + ${item.id}" name="secretStringDel" hidden="true" />
-            </td>
-        </tr>
-    </table>
-
-</form>
-
-<center>
-    <h1>Add Item</h1>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" />
-        <input type="submit" value="Upload File" />
-        <input type="text" id="secretStringAdd" name="secretStringAdd" hidden="true" />
-    </form>
-</center>
 
 </body>
 </html>

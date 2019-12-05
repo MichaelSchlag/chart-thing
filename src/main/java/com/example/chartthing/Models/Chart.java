@@ -11,7 +11,8 @@ import java.util.List;
 @Entity
 public class Chart {
 
-    private ArrayList<ChartItem> chartItems;
+//    private ArrayList<ChartItem> chartItems;
+    private ArrayList<Integer> chartItems;
     private String name;
     private String description;
     private String xname;
@@ -21,26 +22,35 @@ public class Chart {
     private int ymin;
     private int ymax;
 
+    private int userId;
+
     @Id
     @GeneratedValue
     private int id;
-
-    public Chart(String name, String description) {
+//, ArrayList<Integer> chartItems
+    public Chart(String name, String description, String xname, String yname, int xmin, int xmax, int ymin, int ymax) {
         this.name = name;
         this.description = description;
+        this.xname = xname;
+        this.yname = yname;
+        this.xmin = xmin;
+        this.xmax = xmax;
+        this.ymin = ymin;
+        this.ymax = ymax;
+//        this.chartItems = chartItems;
     }
 
     public Chart() { }
 
-    public List<ChartItem> getChartItems() {
+    public ArrayList<Integer> getChartItems() {
         return chartItems;
     }
 
-    public void setChartItems(ArrayList<ChartItem> chartItems) {
+    public void setChartItems(ArrayList<Integer> chartItems) {
         this.chartItems = chartItems;
     }
 
-    public void addChartItem(ChartItem item){
+    public void addChartItem(Integer item){
         chartItems.add(item);
     }
 
