@@ -117,4 +117,8 @@ public class Chart {
     public void setYmax(int ymax) {
         this.ymax = ymax;
     }
+
+    public int getId() {
+        return id;
+    }
 }

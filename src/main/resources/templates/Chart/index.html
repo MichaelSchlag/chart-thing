@@ -8,5 +8,9 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
+<ul th:each="chart : ${charts}">
+    <li><a th:href="@{'/view/' + ${chart.id}}" th:text="${chart.name}">Test</a></li>
+</ul>
+
 </body>
 </html>
