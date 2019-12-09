@@ -22,7 +22,7 @@ public class ChartItem {
 
     }
 
-    public ChartItem(int x, int y, String path){
+    public ChartItem(int x, int y, String path, int chartId){
         this.x = x;
         this.y = y;
         this.path = path;

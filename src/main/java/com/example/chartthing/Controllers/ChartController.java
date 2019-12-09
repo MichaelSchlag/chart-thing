@@ -32,11 +32,22 @@ public class ChartController {
     @Autowired
     private ChartItemDao chartItemDao;
 
+//    Chart currentChart = new Chart();
+
     public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/resources/static/images";
 
+    Chart chartToBeMade;
+
+    @ModelAttribute("newChartId")
+    public int addLastId() {
+        return getLastId();
+    }
+
     @RequestMapping(value="")
-//    @ResponseBody
     public String home(Model model) {
+        updateCurrentChart(getLastId());
+
+//        model.addAttribute("newChartId", getLastId());
         model.addAttribute("charts", chartDao.findAll());
         model.addAttribute("title", "Home");
 
@@ -45,7 +56,38 @@ public class ChartController {
 
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String newChart(Model model){
-//        model.addAttribute("items", chartItemDao.findAll());
+    //        model.addAttribute("items", chartItemDao.findAll());
+        Chart new_chart = new Chart();
+
+        ArrayList<ChartItem> items = new ArrayList<>();
+
+        for(ChartItem item : chartItemDao.findAll()){
+            if (item.getChartId() == new_chart.getId()){
+                items.add(item);
+            }
+        }
+
+        model.addAttribute("items", items);
+        model.addAttribute("chart", chartToBeMade);
+        model.addAttribute("title", "New Chart");
+        return "Chart/new-chart";
+    }
+
+    @RequestMapping(value = "new/{id}", method = RequestMethod.GET)
+    public String newChartWithId(@PathVariable("id") int id, Model model){
+        //        model.addAttribute("items", chartItemDao.findAll());
+        Chart new_chart = chartDao.findById(id).get();
+
+        ArrayList<ChartItem> items = new ArrayList<>();
+
+        for(ChartItem item : chartItemDao.findAll()){
+            if (item.getChartId() == new_chart.getId()){
+                items.add(item);
+            }
+        }
+
+        model.addAttribute("items", items);
+        model.addAttribute("chart", new_chart);
         model.addAttribute("title", "New Chart");
         return "Chart/new-chart";
     }
@@ -100,8 +142,22 @@ public class ChartController {
         return "Chart/test-success";
     }
 
+    @RequestMapping(value = "new/{id}", method = RequestMethod.POST)
+    public String postNewChartWithId(@PathVariable("id") int id, Model model, @RequestParam Map<String,String> requestParams){
+
+        ArrayList<Integer> ids = findIdsOfSecretString(requestParams.get("secretString"));
+
+        Chart chart = chartDao.findById(id).get();
+
+        reassignChart(requestParams, chart);
+
+        remapItemIds(id, ids);
+
+        return "Chart/test-success";
+    }
+
     @RequestMapping(value = "upload")
-    public String upload(Model model, @RequestParam("file") MultipartFile[] files, @RequestParam("secretStringAdd") String secretString) {
+    public String upload(Model model, @RequestParam("file") MultipartFile[] files, @RequestParam("secretStringAdd") String secretString, @RequestParam Map<String,String> requestParams) {
         StringBuilder fileNames = new StringBuilder();
         for (MultipartFile file : files) {
             Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
@@ -113,16 +169,17 @@ public class ChartController {
                 e.printStackTrace();
             }
         }
-        ChartItem newChartItem = new ChartItem(0, 0, "" + files[0].getOriginalFilename());
+        ChartItem newChartItem = new ChartItem(0, 0, "" + files[0].getOriginalFilename(), -1);
 
         System.out.println(newChartItem);
         chartItemDao.save(newChartItem);
 
         secretDecoder(secretString);
 
+
         ArrayList<ChartItem> items = new ArrayList<>();
         for(ChartItem item : chartItemDao.findAll()){
-            if(item.getChartId() == 0){
+            if(item.getChartId() == -1){
                 items.add(item);
             }
         }
@@ -131,11 +188,53 @@ public class ChartController {
         model.addAttribute("title", "New Chart");
 
 
-        return "Chart/new-chart";
+        return "redirect:/new";
+    }
+
+    @RequestMapping(value = "upload/{id}")
+    public String uploadWithId(@PathVariable("id") int id, Model model, @RequestParam("file") MultipartFile[] files, @RequestParam("secretStringAdd") String secretString, @RequestParam Map<String,String> requestParams) {
+        StringBuilder fileNames = new StringBuilder();
+        for (MultipartFile file : files) {
+            Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+            fileNames.append(file.getOriginalFilename()+" ");
+            try {
+                Files.write(fileNameAndPath, file.getBytes());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        ChartItem newChartItem = new ChartItem(0, 0, "" + files[0].getOriginalFilename(), -1);
+
+        System.out.println(newChartItem);
+        chartItemDao.save(newChartItem);
+
+        secretDecoder(secretString);
+
+
+        ArrayList<Integer> ids = findIdsOfSecretString(requestParams.get("secretString"));
+        Chart chart = chartDao.findById(id).get();
+        reassignChart(requestParams, chart);
+        remapItemIds(id, ids);
+
+        ArrayList<ChartItem> items = new ArrayList<>();
+        for(ChartItem item : chartItemDao.findAll()){
+            if(item.getChartId() == id){
+                items.add(item);
+            }
+        }
+
+        model.addAttribute("items", items);
+        model.addAttribute("title", "New Chart");
+
+
+        return "redirect:/new";
     }
 //, method = RequestMethod.POST
     @RequestMapping(value = "delete")
     public String delete(Model model, @RequestParam("secretStringDel") String secretString, @RequestParam("del_id") String del_id_string){
+
+        int id = chartToBeMade.getId();
 
         Integer del_id = Integer.parseInt(del_id_string);
         System.out.println(del_id);
@@ -148,7 +247,7 @@ public class ChartController {
 
         ArrayList<ChartItem> items = new ArrayList<>();
         for(ChartItem item : chartItemDao.findAll()){
-            if(item.getChartId() == 0){
+            if(item.getChartId() == -1){
                 items.add(item);
             }
         }
@@ -156,7 +255,7 @@ public class ChartController {
         model.addAttribute("items", items);
         model.addAttribute("title", "New Chart");
 
-        return "redirect:/new";
+        return "redirect:/new/" + id;
     }
 
     public void secretDecoder(String secret){
@@ -223,5 +322,47 @@ public class ChartController {
             item.setChartId(chart_id);
             chartItemDao.save(item);
         }
+    }
+
+    public void reassignChart(Map<String,String> requestParams, Chart chart){
+
+        String chartName = requestParams.get("chartName");
+        String chartDesc = requestParams.get("chartDesc");
+        String xname = requestParams.get("x-axis");
+        String yname = requestParams.get("y-axis");
+        int xmin = Integer.parseInt(requestParams.get("x-min"));
+        int xmax = Integer.parseInt(requestParams.get("x-max"));
+        int ymin = Integer.parseInt(requestParams.get("y-min"));
+        int ymax = Integer.parseInt(requestParams.get("y-max"));
+
+        chart.setName(chartName);
+        chart.setDescription(chartDesc);
+        chart.setXname(xname);
+        chart.setYname(yname);
+        chart.setXmin(xmin);
+        chart.setXmax(xmax);
+        chart.setYmin(ymin);
+        chart.setYmax(ymax);
+
+        chartDao.save(chart);
+    }
+
+    public void updateCurrentChart(int id){
+        chartToBeMade = chartDao.findById(id).get();
+    }
+
+    public int getLastId(){
+        Iterable<Chart> charts = chartDao.findAll();
+        int lastId = 0;
+
+        for(Chart chart : charts){
+            if(chart.getId() > lastId){
+                lastId = chart.getId();
+            }
+        }
+
+        lastId += 1;
+
+        return lastId;
     }
 }
