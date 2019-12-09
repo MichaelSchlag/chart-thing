@@ -22,11 +22,11 @@ public class ChartItem {
 
     }
 
-    public ChartItem(int x, int y, String path, int chartId){
+    public ChartItem(int x, int y, String path){
         this.x = x;
         this.y = y;
         this.path = path;
-        this.chartId = chartId;
+//        this.chartId = chartId;
     }
 
     public int getX() {

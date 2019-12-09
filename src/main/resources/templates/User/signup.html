@@ -9,25 +9,49 @@
     <nav th:replace="fragments :: navigation"></nav>
 
     <form method="post" th:object="${user}">
-        <div>
-            <label th:for="username">Username</label>
-            <input th:field="*{username}"  />
-            <span th:errors="*{username}" class="error"></span>
-        </div>
-        <div>
-            <label th:for="email">Email</label>
-            <input th:field="*{email}" type="email" />
-            <span th:errors="*{email}" class="error"></span>
-        </div>
-        <div>
-            <label th:for="password">Password</label>
-            <input th:field="*{password}" type="password" />
-            <span th:errors="*{password}" class="error"></span>
-        </div>
-        <div>
-            <label th:for="password">Verify</label>
-            <input type="password" name="verify" />
-        </div>
+        <table>
+            <tr>
+                <td>
+                    <label th:for="username">Username</label>
+                </td>
+                <td>
+                    <input th:field="*{username}"  />
+                </td>
+                <td>
+                    <span th:errors="*{username}" class="error"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:for="email">Email</label>
+                </td>
+                <td>
+                    <input th:field="*{email}" type="email" />
+                </td>
+                <td>
+                    <span th:errors="*{email}" class="error"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:for="password">Password</label>
+                </td>
+                <td>
+                    <input th:field="*{password}" type="password" />
+                </td>
+                <td>
+                    <span th:errors="*{password}" class="error"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:for="password">Verify</label>
+                </td>
+                <td>
+                    <input type="password" name="verify" />
+                </td>
+            </tr>
+        </table>
         <span th:text="${message}"></span>
         <br>
         <input type="submit" value="Submit" />

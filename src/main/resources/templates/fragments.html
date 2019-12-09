@@ -10,32 +10,26 @@
             height: 400px;
             border: 1px solid black;
         }
-
         #item-data{
             margin = 15px;
             background-color: grey;
         }
-
         #item-x, #item-y {
             width: 50px;
             padding-left: 10px;
             padding-right: 10px;
         }
-
         #item-container{
             height: 400px;
             overflow-y: scroll;
         }
-
         img{
             max-height: 100px;
             max-width: 100px;
         }
-
         * {
             box-sizing: border-box;
         }
-
         .col-1 {width: 8.33%;}
         .col-2 {width: 16.66%;}
         .col-3 {width: 25%;}
@@ -48,30 +42,26 @@
         .col-10 {width: 83.33%;}
         .col-11 {width: 91.66%;}
         .col-12 {width: 100%;}
-
         [class*="col-"] {
           float: left;
           padding: 15px;
           border: 1px solid red;
         }
-
         .row::after {
           content: "";
           clear: both;
           display: table;
         }
-
-
     </style>
     <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
-<!--    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-<!--    <script src="Chart/script.js" type="text/javascript"></script>-->
+    <!--    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <!--    <script src="Chart/script.js" type="text/javascript"></script>-->
 </head>
 <body>
 
 <nav th:fragment="navigation">
     <a href="/">Home</a> |
-    <a th:href="@{'/new/' + ${newChartId}}">Create</a> |
+    <a href="/new">Create</a> |
     <a href="/user/add">Sign Up</a>
 </nav>
 

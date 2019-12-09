@@ -113,17 +113,6 @@ function drawImage(){
         }
         idIterator++;
     }
-    var all = document.getElementsByName("secretStringDel");
-    for(var i = 0; i < all.length; i++){
-        all[i].value = secret.value;
-    }
-    document.getElementById("secretStringAdd").value = secret.value;
 }
 
 
-function showData(id){
-     document.getElementById("item-x" + id).hidden = !document.getElementById("item-x" + id).hidden;
-     document.getElementById("item-y" + id).hidden = !document.getElementById("item-y" + id).hidden;
-     document.getElementById("del" + id).hidden = !document.getElementById("del" + id).hidden;
-//     document.getElementById("delLabel" + id).hidden = !document.getElementById("delLabel" + id).hidden;
-}
