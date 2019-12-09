@@ -18,9 +18,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -39,13 +37,15 @@ public class ChartController {
     @RequestMapping(value="")
 //    @ResponseBody
     public String home(Model model) {
+        model.addAttribute("charts", chartDao.findAll());
         model.addAttribute("title", "Home");
+
         return "Chart/index";
     }
 
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String newChart(Model model){
-        model.addAttribute("items", chartItemDao.findAll());
+//        model.addAttribute("items", chartItemDao.findAll());
         model.addAttribute("title", "New Chart");
         return "Chart/new-chart";
     }
@@ -76,28 +76,9 @@ public class ChartController {
         return "Chart/view-chart";
     }
 
-//    @RequestMapping(value = "new", method = RequestMethod.POST)
-//    public String postNewChart(Model model, Errors errors, @ModelAttribute @Valid Chart newChart){
-//
-//        if(errors.hasErrors()){
-//            model.addAttribute("items", chartItemDao.findAll());
-//            model.addAttribute("title", "New Chart");
-//            return "Chart/new-chart";
-//        }
-//
-//        return "test-success";
-//    }
-
     @RequestMapping(value = "new", method = RequestMethod.POST)
     public String postNewChart(Model model, @RequestParam Map<String,String> requestParams){
 
-//        if(errors.hasErrors()){
-//            model.addAttribute("items", chartItemDao.findAll());
-//            model.addAttribute("title", "New Chart");
-//            return "Chart/new-chart";
-//        }
-
-//        System.out.println(requestParams.size());
         ArrayList<Integer> ids = findIdsOfSecretString(requestParams.get("secretString"));
         System.out.println(ids);
 
@@ -113,6 +94,8 @@ public class ChartController {
         Chart newChart = new Chart(chartName, chartDesc, xname, yname, xmin, xmax, ymin, ymax);
 
         chartDao.save(newChart);
+
+        remapItemIds(newChart.getId(), ids);
 
         return "Chart/test-success";
     }
@@ -137,7 +120,14 @@ public class ChartController {
 
         secretDecoder(secretString);
 
-        model.addAttribute("items", chartItemDao.findAll());
+        ArrayList<ChartItem> items = new ArrayList<>();
+        for(ChartItem item : chartItemDao.findAll()){
+            if(item.getChartId() == 0){
+                items.add(item);
+            }
+        }
+
+        model.addAttribute("items", items);
         model.addAttribute("title", "New Chart");
 
 
@@ -152,9 +142,18 @@ public class ChartController {
 
         chartItemDao.deleteById(del_id);
 
+
+
         secretDecoder(secretString);
 
-        model.addAttribute("items", chartItemDao.findAll());
+        ArrayList<ChartItem> items = new ArrayList<>();
+        for(ChartItem item : chartItemDao.findAll()){
+            if(item.getChartId() == 0){
+                items.add(item);
+            }
+        }
+
+        model.addAttribute("items", items);
         model.addAttribute("title", "New Chart");
 
         return "redirect:/new";
@@ -218,4 +217,11 @@ public class ChartController {
         return ids;
     }
 
+    public void remapItemIds(int chart_id, ArrayList<Integer> ids){
+        for(int id : ids){
+            ChartItem item = chartItemDao.findById(id).get();
+            item.setChartId(chart_id);
+            chartItemDao.save(item);
+        }
+    }
 }
