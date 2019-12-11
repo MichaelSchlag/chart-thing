@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+<h1>chart-thing</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<h3 th:text="${message}"></h3>
+
+<ul th:each="chart : ${charts}">
+    <li><a th:href="@{'/view/' + ${chart.id}}" th:text="${chart.name}">Test</a></li>
+</ul>
+
+</body>
+</html>

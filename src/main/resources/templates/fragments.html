@@ -62,7 +62,8 @@
 <nav th:fragment="navigation">
     <a href="/">Home</a> |
     <a href="/new">Create</a> |
-    <a href="/user/add">Sign Up</a>
+    <a href="/user/add" th:unless="${userId}">Sign Up</a>
+<!--    <a th:text="${userId?}" th:href="/user/${userId}">Profile</a>-->
 </nav>
 
 </body>

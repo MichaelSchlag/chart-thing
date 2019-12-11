@@ -1,17 +1,17 @@
 package com.example.chartthing.Controllers;
 
+import com.example.chartthing.Models.Chart;
+import com.example.chartthing.Models.Data.ChartDao;
 import com.example.chartthing.Models.Data.UserDao;
 import com.example.chartthing.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("user")
@@ -19,6 +19,9 @@ public class UserController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private ChartDao chartDao;
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model){
@@ -40,6 +43,25 @@ public class UserController {
             model.addAttribute(user);
             return "user/signup";
         }
+    }
+
+    @RequestMapping(value = "profile/{id}", method = RequestMethod.GET)
+    public String profile(@PathVariable("id") int id, Model model){
+        if(userDao.findById(id).get() != null){
+            User user = userDao.findById(id).get();
+            ArrayList<Chart> charts = new ArrayList<>();
+
+            for(Chart chart : chartDao.findAll()){
+                if(chart.getUserId() == id){
+                    charts.add(chart);
+                }
+            }
+
+            model.addAttribute("charts", charts);
+            model.addAttribute("message", "Welcome to " + user.getUsername() + "'s profile!");
+            return "user/profile";
+        }
+        return "redirect:/";
     }
 
 
