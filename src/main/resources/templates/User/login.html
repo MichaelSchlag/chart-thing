@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+<div  id="wrapper">
+    <h1 th:text="${title}"></h1>
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <form method="post" th:object="${user}">
+        <table>
+            <tr>
+                <td>
+                    <label th:for="username">Username</label>
+                </td>
+                <td>
+                    <input type="text" name="username" />
+                </td>
+                <td>
+                    <span class="error" name="userError" th:text="${userError}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:for="password">Password</label>
+                </td>
+                <td>
+                    <input type="password" name="password" />
+                </td>
+                <td>
+                    <span class="error" name="passwordError" th:text="${passwordError}"></span>
+                </td>
+            </tr>
+        </table>
+        <span th:text="${message}"></span>
+        <br>
+        <input type="submit" value="Submit" />
+    </form>
+
+    <p>Don't have an account? <a href="/user/add">Sign up</a></p>
+</div>
+</body>
+</html>

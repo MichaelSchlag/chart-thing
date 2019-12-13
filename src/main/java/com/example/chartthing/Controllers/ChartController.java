@@ -4,7 +4,9 @@ import com.example.chartthing.Models.Chart;
 import com.example.chartthing.Models.ChartItem;
 import com.example.chartthing.Models.Data.ChartDao;
 import com.example.chartthing.Models.Data.ChartItemDao;
+import com.example.chartthing.Models.Data.UserDao;
 import com.example.chartthing.Models.Test;
+import com.example.chartthing.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,11 @@ public class ChartController {
     @Autowired
     private ChartItemDao chartItemDao;
 
+    @Autowired
+    private UserDao userDao;
+
+    public String loggedInUser;
+
     public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/resources/static/images";
 
     @RequestMapping(value="")
@@ -39,7 +46,16 @@ public class ChartController {
     public String home(Model model) {
         model.addAttribute("charts", chartDao.findAll());
         model.addAttribute("title", "Home");
-
+        if(loggedInUser != "") {
+            for(User user : userDao.findAll()){
+                if(user.getUsername().equals(loggedInUser)){
+                    int userId = user.getId();
+                    model.addAttribute("userId", userId);
+                    System.out.println(userId);
+                }
+            }
+        }
+        System.out.println(loggedInUser);
         return "Chart/index";
     }
 
@@ -230,5 +246,9 @@ public class ChartController {
             item.setChartId(chart_id);
             chartItemDao.save(item);
         }
+    }
+
+    public void setUser(String currentUser){
+        loggedInUser = currentUser;
     }
 }

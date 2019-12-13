@@ -63,7 +63,7 @@
                                 <input type="number" name="item-x" th:id="'item-x' + ${item.id}" th:value="${item.x}" onchange="drawChart()" />
                                 <input type="number" name="item-y" th:id="'item-y' + ${item.id}" th:value="${item.y}" onchange="drawChart()" />
                                 <p th:text="${item.getPath()}"></p>
-                                <script src="js/viewScript.js">drawChart();</script>
+                                <script src="js/viewScript.js"></script>
                             </div>
                         </td>
                     </tr>
@@ -74,6 +74,8 @@
     <input type="submit" value="Cast Vote (Not implemented yet)" />
 </form>
 
-<script src="js/viewScript.js">drawChart();</script>
+<p th:each="item: ${items}">
+    <script src="js/viewScript.js"></script>
+</p>
 </body>
 </html>
