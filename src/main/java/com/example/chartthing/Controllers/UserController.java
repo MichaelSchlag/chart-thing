@@ -39,7 +39,7 @@ public class UserController {
             model.addAttribute("title", "Welcome!");
             model.addAttribute("message", "Welcome, " + user.getUsername() + "!");
             userDao.save(user);
-            chartController.setUser(user.getUsername());
+//            chartController.setUser(user.getUsername());
             return "user/index";
         } else if(!user.getPassword().equals(verify) && !errors.hasErrors()){
             model.addAttribute(user);
